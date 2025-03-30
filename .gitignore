@@ -1,5 +1,6 @@
 # ignore viirs data
 viirs/tifs
+viirs/token
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
