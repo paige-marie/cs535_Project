@@ -1,7 +1,7 @@
 #!/bin/bash
 
 while true; do
-  ls -l | wc -l
+  ls -l tifs | wc -l
   sleep 30
 done
 
