@@ -1,3 +1,6 @@
+# ignore viirs data
+viirs/tifs
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
