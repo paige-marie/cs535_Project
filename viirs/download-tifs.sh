@@ -13,8 +13,11 @@ TIFS_LIST='Iowa-download-list.txt'
 
 # the tifs are placed in a `tifs` subdirectory
 
-TOKEN=$1
-
-mkdir -p tifs
-wget --header "Authorization: Bearer $TOKEN" -i $TIFS_LIST -P ./tifs/
+if [[ -n $1 ]]; then
+	TOKEN=$1
+	mkdir -p tifs
+	wget --header "Authorization: Bearer $TOKEN" -i $TIFS_LIST -P ./tifs/
+else
+	echo "Must pass your auth token as an argument"
+fi
 
