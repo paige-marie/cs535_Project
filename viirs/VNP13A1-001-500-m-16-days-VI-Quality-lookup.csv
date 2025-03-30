@@ -1,0 +1,268 @@
+Value,MODLAND,VI usefulness,Aerosol quantity,Adjacent cloud detected,Atmosphere BRDF correction,Mixed clouds,Land/Water flag,Possible snow/ice,Possible shadow
+2061,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,No,No
+2065,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,No,No
+2069,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,No,No
+2116,"VI produced, good quality",Lower quality,Low,No,No,No,land no desert,No,No
+2120,"VI produced, good quality",Decreasing quality,Low,No,No,No,land no desert,No,No
+2124,"VI produced, good quality",Decreasing quality,Low,No,No,No,land no desert,No,No
+2185,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,land no desert,No,No
+2189,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,land no desert,No,No
+2193,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,land no desert,No,No
+2257,"VI produced, but check other QA",Decreasing quality,High,No,No,No,land no desert,No,No
+2261,"VI produced, but check other QA",Decreasing quality,High,No,No,No,land no desert,No,No
+2265,"VI produced, but check other QA",Decreasing quality,High,No,No,No,land no desert,No,No
+2321,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,No,No
+2325,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,No,No
+2329,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,No,No
+2377,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,No,No
+2381,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,No,No
+2385,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,No,No
+2445,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,land no desert,No,No
+2449,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,land no desert,No,No
+2453,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,land no desert,No,No
+2517,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,land no desert,No,No
+2521,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,land no desert,No,No
+2525,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,land no desert,No,No
+3098,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,land no desert,No,No
+3102,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,land no desert,No,No
+3106,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,land no desert,No,No
+3154,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,land no desert,No,No
+3158,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,land no desert,No,No
+3162,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,land no desert,No,No
+3358,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,land no desert,No,No
+3362,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,land no desert,No,No
+3366,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,land no desert,No,No
+3414,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,land no desert,No,No
+3418,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,land no desert,No,No
+3422,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,land no desert,No,No
+3482,"Pixel produced, but most probably cloudy",Decreasing quality,Average,Yes,No,Yes,land no desert,No,No
+3486,"Pixel produced, but most probably cloudy",Decreasing quality,Average,Yes,No,Yes,land no desert,No,No
+3490,"Pixel produced, but most probably cloudy",Decreasing quality,Average,Yes,No,Yes,land no desert,No,No
+3554,"Pixel produced, but most probably cloudy",Decreasing quality,High,Yes,No,Yes,land no desert,No,No
+3558,"Pixel produced, but most probably cloudy",Decreasing quality,High,Yes,No,Yes,land no desert,No,No
+3562,"Pixel produced, but most probably cloudy",Decreasing quality,High,Yes,No,Yes,land no desert,No,No
+4109,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,No,No
+4113,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,No,No
+4117,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,No,No
+4164,"VI produced, good quality",Lower quality,Low,No,No,No,inland water,No,No
+4168,"VI produced, good quality",Decreasing quality,Low,No,No,No,inland water,No,No
+4172,"VI produced, good quality",Decreasing quality,Low,No,No,No,inland water,No,No
+4233,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,inland water,No,No
+4237,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,inland water,No,No
+4241,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,inland water,No,No
+4305,"VI produced, but check other QA",Decreasing quality,High,No,No,No,inland water,No,No
+4309,"VI produced, but check other QA",Decreasing quality,High,No,No,No,inland water,No,No
+4313,"VI produced, but check other QA",Decreasing quality,High,No,No,No,inland water,No,No
+4369,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,No,No
+4373,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,No,No
+4377,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,No,No
+4425,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,No,No
+4429,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,No,No
+4433,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,No,No
+4493,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,inland water,No,No
+4497,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,inland water,No,No
+4501,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,inland water,No,No
+4565,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,inland water,No,No
+4569,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,inland water,No,No
+4573,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,inland water,No,No
+5202,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,inland water,No,No
+5206,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,inland water,No,No
+5210,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,inland water,No,No
+5406,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,inland water,No,No
+5410,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,inland water,No,No
+5414,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,inland water,No,No
+5462,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,inland water,No,No
+5466,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,inland water,No,No
+5470,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,inland water,No,No
+10253,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,No,No
+10257,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,No,No
+10261,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,No,No
+10308,"VI produced, good quality",Lower quality,Low,No,No,No,coastal,No,No
+10312,"VI produced, good quality",Decreasing quality,Low,No,No,No,coastal,No,No
+10316,"VI produced, good quality",Decreasing quality,Low,No,No,No,coastal,No,No
+10377,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,coastal,No,No
+10381,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,coastal,No,No
+10385,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,coastal,No,No
+10449,"VI produced, but check other QA",Decreasing quality,High,No,No,No,coastal,No,No
+10453,"VI produced, but check other QA",Decreasing quality,High,No,No,No,coastal,No,No
+10457,"VI produced, but check other QA",Decreasing quality,High,No,No,No,coastal,No,No
+10513,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,No,No
+10517,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,No,No
+10521,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,No,No
+10569,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,No,No
+10573,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,No,No
+10577,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,No,No
+10637,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,coastal,No,No
+10641,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,coastal,No,No
+10645,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,coastal,No,No
+10709,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,coastal,No,No
+10713,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,coastal,No,No
+10717,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,coastal,No,No
+11290,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,coastal,No,No
+11294,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,coastal,No,No
+11298,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,coastal,No,No
+11346,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,coastal,No,No
+11350,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,coastal,No,No
+11354,"Pixel produced, but most probably cloudy",Decreasing quality,Low,No,No,Yes,coastal,No,No
+11550,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,coastal,No,No
+11554,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,coastal,No,No
+11558,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,coastal,No,No
+11606,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,coastal,No,No
+11610,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,coastal,No,No
+11614,"Pixel produced, but most probably cloudy",Decreasing quality,Low,Yes,No,Yes,coastal,No,No
+11746,"Pixel produced, but most probably cloudy",Decreasing quality,High,Yes,No,Yes,coastal,No,No
+11750,"Pixel produced, but most probably cloudy",Decreasing quality,High,Yes,No,Yes,coastal,No,No
+18449,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,Yes,No
+18453,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,Yes,No
+18457,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,Yes,No
+18504,"VI produced, good quality",Decreasing quality,Low,No,No,No,land no desert,Yes,No
+18508,"VI produced, good quality",Decreasing quality,Low,No,No,No,land no desert,Yes,No
+18512,"VI produced, good quality",Decreasing quality,Low,No,No,No,land no desert,Yes,No
+18709,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,Yes,No
+18713,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,Yes,No
+18717,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,Yes,No
+18765,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,Yes,No
+18769,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,Yes,No
+18773,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,Yes,No
+19486,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,land no desert,Yes,No
+19490,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,land no desert,Yes,No
+19494,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,No,No,Yes,land no desert,Yes,No
+19746,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,land no desert,Yes,No
+19750,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,land no desert,Yes,No
+19754,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,land no desert,Yes,No
+20497,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,Yes,No
+20501,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,Yes,No
+20505,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,Yes,No
+20552,"VI produced, good quality",Decreasing quality,Low,No,No,No,inland water,Yes,No
+20556,"VI produced, good quality",Decreasing quality,Low,No,No,No,inland water,Yes,No
+20560,"VI produced, good quality",Decreasing quality,Low,No,No,No,inland water,Yes,No
+20757,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,Yes,No
+20761,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,Yes,No
+20765,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,Yes,No
+20813,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,Yes,No
+20817,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,Yes,No
+20821,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,Yes,No
+26641,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,Yes,No
+26645,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,Yes,No
+26649,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,Yes,No
+26696,"VI produced, good quality",Decreasing quality,Low,No,No,No,coastal,Yes,No
+26700,"VI produced, good quality",Decreasing quality,Low,No,No,No,coastal,Yes,No
+26704,"VI produced, good quality",Decreasing quality,Low,No,No,No,coastal,Yes,No
+26901,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,Yes,No
+26905,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,Yes,No
+26909,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,Yes,No
+26957,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,Yes,No
+26961,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,Yes,No
+26965,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,Yes,No
+27942,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,coastal,Yes,No
+27946,"Pixel produced, but most probably cloudy",Decreasing quality,Climatology,Yes,No,Yes,coastal,Yes,No
+34837,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,No,Yes
+34841,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,No,Yes
+34845,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,No,Yes
+34893,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,land no desert,No,Yes
+34897,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,land no desert,No,Yes
+34901,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,land no desert,No,Yes
+34961,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,land no desert,No,Yes
+34965,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,land no desert,No,Yes
+34969,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,land no desert,No,Yes
+35033,"VI produced, but check other QA",Decreasing quality,High,No,No,No,land no desert,No,Yes
+35037,"VI produced, but check other QA",Decreasing quality,High,No,No,No,land no desert,No,Yes
+35041,"VI produced, but check other QA",Decreasing quality,High,No,No,No,land no desert,No,Yes
+35097,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,No,Yes
+35101,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,No,Yes
+35105,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,No,Yes
+35153,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,No,Yes
+35157,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,No,Yes
+35161,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,No,Yes
+35221,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,land no desert,No,Yes
+35225,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,land no desert,No,Yes
+35229,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,land no desert,No,Yes
+35293,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,land no desert,No,Yes
+35297,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,land no desert,No,Yes
+35301,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,land no desert,No,Yes
+36885,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,No,Yes
+36889,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,No,Yes
+36893,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,No,Yes
+36941,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,inland water,No,Yes
+36945,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,inland water,No,Yes
+36949,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,inland water,No,Yes
+37009,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,inland water,No,Yes
+37013,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,inland water,No,Yes
+37017,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,inland water,No,Yes
+37081,"VI produced, but check other QA",Decreasing quality,High,No,No,No,inland water,No,Yes
+37085,"VI produced, but check other QA",Decreasing quality,High,No,No,No,inland water,No,Yes
+37089,"VI produced, but check other QA",Decreasing quality,High,No,No,No,inland water,No,Yes
+37145,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,No,Yes
+37149,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,No,Yes
+37153,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,No,Yes
+37201,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,No,Yes
+37205,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,No,Yes
+37209,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,No,Yes
+37269,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,inland water,No,Yes
+37273,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,inland water,No,Yes
+37277,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,inland water,No,Yes
+37341,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,inland water,No,Yes
+37345,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,inland water,No,Yes
+37349,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,inland water,No,Yes
+43029,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,No,Yes
+43033,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,No,Yes
+43037,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,No,Yes
+43085,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,coastal,No,Yes
+43089,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,coastal,No,Yes
+43093,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,coastal,No,Yes
+43153,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,coastal,No,Yes
+43157,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,coastal,No,Yes
+43161,"VI produced, but check other QA",Decreasing quality,Average,No,No,No,coastal,No,Yes
+43225,"VI produced, but check other QA",Decreasing quality,High,No,No,No,coastal,No,Yes
+43229,"VI produced, but check other QA",Decreasing quality,High,No,No,No,coastal,No,Yes
+43233,"VI produced, but check other QA",Decreasing quality,High,No,No,No,coastal,No,Yes
+43289,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,No,Yes
+43293,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,No,Yes
+43297,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,No,Yes
+43345,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,No,Yes
+43349,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,No,Yes
+43353,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,No,Yes
+43413,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,coastal,No,Yes
+43417,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,coastal,No,Yes
+43421,"VI produced, but check other QA",Decreasing quality,Average,Yes,No,No,coastal,No,Yes
+43485,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,coastal,No,Yes
+43489,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,coastal,No,Yes
+43493,"VI produced, but check other QA",Decreasing quality,High,Yes,No,No,coastal,No,Yes
+51225,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,Yes,Yes
+51229,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,Yes,Yes
+51233,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,land no desert,Yes,Yes
+51281,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,land no desert,Yes,Yes
+51285,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,land no desert,Yes,Yes
+51289,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,land no desert,Yes,Yes
+51485,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,Yes,Yes
+51489,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,Yes,Yes
+51493,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,land no desert,Yes,Yes
+51541,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,Yes,Yes
+51545,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,Yes,Yes
+51549,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,land no desert,Yes,Yes
+53247,Pixel not produced due to other reasons than clouds,Not useful for any other reason/not processed,High,Yes,Yes,Yes,land no desert,Yes,Yes
+53273,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,Yes,Yes
+53277,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,Yes,Yes
+53281,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,inland water,Yes,Yes
+53329,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,inland water,Yes,Yes
+53333,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,inland water,Yes,Yes
+53337,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,inland water,Yes,Yes
+53533,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,Yes,Yes
+53537,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,Yes,Yes
+53541,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,inland water,Yes,Yes
+53589,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,Yes,Yes
+53593,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,Yes,Yes
+53597,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,inland water,Yes,Yes
+57343,Pixel not produced due to other reasons than clouds,Not useful for any other reason/not processed,High,Yes,Yes,Yes,sea water,Yes,Yes
+59417,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,Yes,Yes
+59421,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,Yes,Yes
+59425,"VI produced, but check other QA",Decreasing quality,Climatology,No,No,No,coastal,Yes,Yes
+59473,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,coastal,Yes,Yes
+59477,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,coastal,Yes,Yes
+59481,"VI produced, but check other QA",Decreasing quality,Low,No,No,No,coastal,Yes,Yes
+59677,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,Yes,Yes
+59681,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,Yes,Yes
+59685,"VI produced, but check other QA",Decreasing quality,Climatology,Yes,No,No,coastal,Yes,Yes
+59733,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,Yes,Yes
+59737,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,Yes,Yes
+59741,"VI produced, but check other QA",Decreasing quality,Low,Yes,No,No,coastal,Yes,Yes
