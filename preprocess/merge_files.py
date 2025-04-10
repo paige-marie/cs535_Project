@@ -18,7 +18,7 @@ DATA = os.getenv("DATA_HOME")
 GRIDMET_DIR = DATA + "/data/gridmet"
 VIIRS_DIR = DATA + "/data/viirs"
 OUTPUT_DIR = DATA + "/data/merged"
-YEARS = range(2013, 2023)
+YEARS = range(2013, 2024)
 
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
