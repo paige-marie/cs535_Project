@@ -13,6 +13,15 @@ from rasterio.enums import Resampling
 from rasterio.vrt import WarpedVRT
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 
+# 100% 10/10 [03:44<00:00, 22.45s/it]                                                                                                                                                                     
+# real    3m44.697s                                                                                        
+# user    3m18.106s                                                                                        
+# sys     0m4.149s                                                                                         
+# 100% 1/1 [00:22<00:00, 22.55s/it]
+# real    0m22.751s
+# user    0m20.551s
+# sys     0m2.322s
+
 HOME = os.getenv("PROJECT_HOME")
 DATA = os.getenv("DATA_HOME")
 GRIDMET_DIR = DATA + "/data/gridmet"
