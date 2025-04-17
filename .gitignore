@@ -2,6 +2,7 @@
 viirs/tifs
 gridmet/gridmet-data
 535-venv/
+viirs/token
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

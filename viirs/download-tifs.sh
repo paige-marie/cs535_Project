@@ -7,7 +7,7 @@
 TIFS_LIST='Iowa-download-list.txt'
 
 # to get a token, first make an account at https://appeears.earthdatacloud.nasa.gov/
-# then execute: `curl --request POST --user <username>:<password> --header "Content-Length: 0" "https://appeears.earthdatacloud.nasa.gov/api/login" > token`
+# then execute: `curl --request POST --user '<username>:<password>' --header "Content-Length: 0" "https://appeears.earthdatacloud.nasa.gov/api/login" > token`
 # your token will be in the newly generated token file, pass that token as an argument to this script
 # usage: ./download-tifs.sh <token>
 
