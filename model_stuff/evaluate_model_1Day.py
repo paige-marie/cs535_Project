@@ -72,10 +72,6 @@ def evaluate(rank, world_size):
     model.load_state_dict(torch.load(MODEL_PATH, map_location='cpu'))
     model.eval()
 
-
-
-
-
     total_rmse = 0.0
     total_batches = 0
 
