@@ -15,17 +15,18 @@ import json
 with open("/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/hyperparamters/8day_lstm_config.json") as f:
     config = json.load(f)
 
-# === CONFIG ===
+#CONFIG
 MODEL_PATH = "/s/bach/b/class/cs535/cs535a/data/new_models/8day_lstm_model.pth"
+MODEL_PATH_BIDIRECTIONAL = "/s/bach/b/class/cs535/cs535a/data/new_models/8day_bidirectional_lstm_model.pth"
 BATCH_SIZE = config["batch_size"]
 TIME_STEPS = 8
 LEARNING_RATE = config["learning_rate"]
 HIDDEN_SIZE = config["hidden_size"]
 DROPOUT = config.get("dropout", 0.0)
 EPOCHS = 20
-PREPROCESSED_DIR = "/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/training/"
+PREPROCESSED_DIR = "/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/training_new/"
 
-# === Data partitioning ===
+#Data partitioning
 #def get_split_indices(dataset, split="train", test_ratio=0.2, seed=42):
 #    total_indices = list(range(len(dataset)))
 #    train_indices, test_indices = train_test_split(total_indices, test_size=test_ratio, random_state=seed)
@@ -44,7 +45,7 @@ def partition_dataset():
     loader = DataLoader(subset, batch_size=bsz, shuffle=True, num_workers=4, pin_memory=True)
     return loader
 
-# === Progress bar ===
+#Progress bar
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=50, fill='█', printEnd="\r"):
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
@@ -59,10 +60,10 @@ def average_gradients(model):
         dist.all_reduce(param.grad.data, op=dist.ReduceOp.SUM)
         param.grad.data /= size
 
-# === Training loop ===
-def train(rank, world_size):
+#Training loop
+def train(rank, world_size, bidirectional):
     train_loader = partition_dataset()
-    model = DeepARLSTM(hidden_size=HIDDEN_SIZE,dropout=DROPOUT)
+    model = DeepARLSTM(hidden_size=HIDDEN_SIZE,dropout=DROPOUT, bidirectional=bidirectional)
     model = model.cuda() if torch.cuda.is_available() else model
     model = nn.parallel.DistributedDataParallel(model)
 
@@ -81,7 +82,7 @@ def train(rank, world_size):
 
             optimizer.zero_grad()
             pred = model(x)               # [B, 1, 64, 64]
-            loss = criterion(pred, y)    # standardized NDVI
+            loss = criterion(pred, y[:, 0:1, :, :])    # standardized NDVI
             loss.backward()
             average_gradients(model)
             optimizer.step()
@@ -94,27 +95,36 @@ def train(rank, world_size):
 
         if rank == 0 and avg_loss < best_loss:
             best_loss = avg_loss
-            torch.save(model.state_dict(), MODEL_PATH)
-            print(f"Model saved to {MODEL_PATH}")
-            with open("/s/bach/b/class/cs535/cs535a/data/new_models/8day_LSTM_model_log.txt", "a") as f:
-                f.write(f"Saved {MODEL_PATH} with MSE {best_loss:.4f} at {datetime.datetime.now()}\n")
+            if bidirectional:
+                torch.save(model.state_dict(), MODEL_PATH_BIDIRECTIONAL)
+                print(f"Model saved to {MODEL_PATH_BIDIRECTIONAL}")
+            else:
+                torch.save(model.state_dict(), MODEL_PATH)
+                print(f"Model saved to {MODEL_PATH}")
+            if bidirectional:
+                with open("/s/bach/b/class/cs535/cs535a/data/new_models/8day_bidirectional_LSTM_model_log.txt", "a") as f:
+                    f.write(f"Saved {MODEL_PATH} with MSE {best_loss:.4f} at {datetime.datetime.now()}\n")
+            else:
+                with open("/s/bach/b/class/cs535/cs535a/data/new_models/8day_LSTM_model_log.txt", "a") as f:
+                    f.write(f"Saved {MODEL_PATH} with MSE {best_loss:.4f} at {datetime.datetime.now()}\n")
 
-# === Distributed setup ===
+#Distributed setup
 def setup(rank, world_size):
-    os.environ['MASTER_ADDR'] = 'shallot'
+    os.environ['MASTER_ADDR'] = 'onion'
     os.environ['MASTER_PORT'] = '17171'
     dist.init_process_group("gloo", rank=int(rank), world_size=int(world_size),
-                            init_method='tcp://shallot:23456', timeout=datetime.timedelta(weeks=120))
+                            init_method='tcp://onion:23456', timeout=datetime.timedelta(weeks=120))
     torch.manual_seed(42)
 
-# === Main entry point ===
+#Main entry point
 if __name__ == "__main__":
     try:
         rank = int(sys.argv[1])
         world_size = int(sys.argv[2])
+        bidirectional = bool(sys.argv[3])
         setup(rank, world_size)
         print(socket.gethostname() + ": setup completed")
-        train(rank, world_size)
+        train(rank, world_size, bidirectional)
     except Exception as e:
         traceback.print_exc()
         sys.exit(3)
