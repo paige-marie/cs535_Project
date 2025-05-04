@@ -1,11 +1,8 @@
 import matplotlib.pyplot as plt
-import numpy as np
 from matplotlib.colors import Normalize
 from matplotlib.colorbar import ColorbarBase
 
-
-# Create figure and axis for just the colorbar
-fig, ax = plt.subplots(figsize=(0.5, 6))  # Adjust size as needed (width, height)
+fig, ax = plt.subplots(figsize=(0.5, 6))  #width, height
 
 norm = Normalize(vmin=-1, vmax=1)
 cb = ColorbarBase(ax, cmap='viridis', norm=norm, orientation='vertical')
