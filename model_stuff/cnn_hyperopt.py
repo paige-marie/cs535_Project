@@ -9,34 +9,34 @@ from torch.utils.data import DataLoader, Subset
 from torchvision.models.video import r3d_18, R3D_18_Weights
 from dataset import MyDataset
 
-# === CNN Model Wrapper ===
+#CNN model
 class ResNetNDVI(nn.Module):
     def __init__(self):
         super().__init__()
         weights = R3D_18_Weights.DEFAULT
         self.base = r3d_18(weights=weights)
-        self.base.fc = nn.Linear(self.base.fc.in_features, 64 * 64 * 8)
+        self.base.fc = nn.Linear(self.base.fc.in_features, 64 * 64)
 
     def forward(self, x):
         out = self.base(x)
         out = torch.tanh(out)
-        return out.view(-1, 8, 64, 64)
+        return out.view(-1, 1, 64, 64)
 
-# === RMSE ===
+#calculate RMSE
 def compute_rmse(pred, target):
     return torch.sqrt(torch.mean((pred - target) ** 2))
 
-# === Hyperparameter Grid ===
+#hyperparameter grid
 param_grid = {
     "batch_size": [500, 750],
     "learning_rate": [1e-4, 5e-4, 1e-3],
     "optimizer": ["adam", "sgd"],
-    "epochs": [5]  # keep short for tuning
+    "epochs": [5]
 }
 
-# === Training Function ===
+#training
 def train_model(config, dataset, device):
-    # Subsample 25% of data
+    #grab only 25% of the data
     indices = torch.randperm(len(dataset))[:len(dataset)//4]
     subset = Subset(dataset, indices)
     loader = DataLoader(subset, batch_size=config["batch_size"], shuffle=True)
@@ -59,7 +59,7 @@ def train_model(config, dataset, device):
             loss.backward()
             optimizer.step()
 
-    # Evaluate on same subset
+    #eval
     model.eval()
     total_rmse = 0.0
     count = 0
@@ -72,7 +72,7 @@ def train_model(config, dataset, device):
             count += 1
     return total_rmse / count
 
-# === Main Script ===
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", required=True, help="Path to .pt files")
@@ -80,7 +80,7 @@ def main():
     parser.add_argument("--out_config", default="best_cnn_config.json")
     args = parser.parse_args()
 
-    print("Loading dataset...")
+    print("Loading dataset")
     dataset = MyDataset(args.data_dir)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -88,11 +88,11 @@ def main():
     best_rmse = float("inf")
     best_config = None
 
-    print("Running hyperparameter search...")
+    print("Running hyperparameter search")
     for config in ParameterGrid(param_grid):
         print(f"Trying config: {config}")
         avg_rmse = train_model(config, dataset, device)
-        print(f"   → RMSE: {avg_rmse:.4f}")
+        print(f"   RMSE: {avg_rmse:.4f}")
 
         if avg_rmse < best_rmse:
             best_rmse = avg_rmse

@@ -12,17 +12,13 @@ from dataset import MyDataset
 from LSTM_model import DeepARLSTM
 import json
 
-with open("/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/hyperparamters/8day_lstm_config.json") as f:
-    config = json.load(f)
 
-#CONFIG
+#normal and bidirectional lstm paths
 MODEL_PATH = "/s/bach/b/class/cs535/cs535a/data/new_models/8day_lstm_model.pth"
 MODEL_PATH_BIDIRECTIONAL = "/s/bach/b/class/cs535/cs535a/data/new_models/8day_bidirectional_lstm_model.pth"
-BATCH_SIZE = config["batch_size"]
+
 TIME_STEPS = 8
-LEARNING_RATE = config["learning_rate"]
-HIDDEN_SIZE = config["hidden_size"]
-DROPOUT = config.get("dropout", 0.0)
+
 EPOCHS = 20
 PREPROCESSED_DIR = "/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/training_new/"
 
@@ -32,7 +28,7 @@ PREPROCESSED_DIR = "/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8d
 #    train_indices, test_indices = train_test_split(total_indices, test_size=test_ratio, random_state=seed)
 #    return train_indices if split == "train" else test_indices
 
-def partition_dataset():
+def partition_dataset(BATCH_SIZE):
     dataset = MyDataset(preprocessed_dir=PREPROCESSED_DIR)
     #split_indices = get_split_indices(dataset, split="train")
 
@@ -62,8 +58,27 @@ def average_gradients(model):
 
 #Training loop
 def train(rank, world_size, bidirectional):
-    train_loader = partition_dataset()
-    model = DeepARLSTM(hidden_size=HIDDEN_SIZE,dropout=DROPOUT, bidirectional=bidirectional)
+    #setup for correct models
+    if bidirectional == "true":
+        with open("/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/hyperparamters/8day_lstm_bidirectional_config.json") as f:
+            config = json.load(f)
+        HIDDEN_SIZE = config["hidden_size"]
+        DROPOUT = config.get("dropout", 0.0)
+        BATCH_SIZE = config["batch_size"]
+        LEARNING_RATE = config["learning_rate"]
+    if bidirectional == "false":
+        with open("/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/hyperparamters/8day_lstm_config.json") as f:
+            config = json.load(f)
+        HIDDEN_SIZE = config["hidden_size"]
+        DROPOUT = config.get("dropout", 0.0)
+        BATCH_SIZE = config["batch_size"]
+        LEARNING_RATE = config["learning_rate"]
+
+    train_loader = partition_dataset(BATCH_SIZE)
+    if bidirectional == "true":
+        model = DeepARLSTM(hidden_size=HIDDEN_SIZE,dropout=DROPOUT, bidirectional=True)
+    if bidirectional == "false":
+        model = DeepARLSTM(hidden_size=HIDDEN_SIZE,dropout=DROPOUT, bidirectional=False)
     model = model.cuda() if torch.cuda.is_available() else model
     model = nn.parallel.DistributedDataParallel(model)
 
@@ -81,8 +96,8 @@ def train(rank, world_size, bidirectional):
                 x, y = x.cuda(), y.cuda()
 
             optimizer.zero_grad()
-            pred = model(x)               # [B, 1, 64, 64]
-            loss = criterion(pred, y[:, 0:1, :, :])    # standardized NDVI
+            pred = model(x)
+            loss = criterion(pred, y[:, 0:1, :, :])
             loss.backward()
             average_gradients(model)
             optimizer.step()
@@ -95,16 +110,16 @@ def train(rank, world_size, bidirectional):
 
         if rank == 0 and avg_loss < best_loss:
             best_loss = avg_loss
-            if bidirectional:
+            if bidirectional == "true":
                 torch.save(model.state_dict(), MODEL_PATH_BIDIRECTIONAL)
                 print(f"Model saved to {MODEL_PATH_BIDIRECTIONAL}")
-            else:
+            if bidirectional == "false":
                 torch.save(model.state_dict(), MODEL_PATH)
                 print(f"Model saved to {MODEL_PATH}")
-            if bidirectional:
+            if bidirectional == "true":
                 with open("/s/bach/b/class/cs535/cs535a/data/new_models/8day_bidirectional_LSTM_model_log.txt", "a") as f:
                     f.write(f"Saved {MODEL_PATH} with MSE {best_loss:.4f} at {datetime.datetime.now()}\n")
-            else:
+            if bidirectional == "false":
                 with open("/s/bach/b/class/cs535/cs535a/data/new_models/8day_LSTM_model_log.txt", "a") as f:
                     f.write(f"Saved {MODEL_PATH} with MSE {best_loss:.4f} at {datetime.datetime.now()}\n")
 
@@ -116,12 +131,12 @@ def setup(rank, world_size):
                             init_method='tcp://onion:23456', timeout=datetime.timedelta(weeks=120))
     torch.manual_seed(42)
 
-#Main entry point
+
 if __name__ == "__main__":
     try:
         rank = int(sys.argv[1])
         world_size = int(sys.argv[2])
-        bidirectional = bool(sys.argv[3])
+        bidirectional = sys.argv[3].lower()
         setup(rank, world_size)
         print(socket.gethostname() + ": setup completed")
         train(rank, world_size, bidirectional)

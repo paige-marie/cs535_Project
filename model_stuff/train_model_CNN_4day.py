@@ -15,6 +15,7 @@ from torchvision.models.video import r3d_18, R3D_18_Weights
 import torch.optim as optim
 import json
 
+#setup configs
 with open("/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/4day/hyperparamters/4day_cnn_config.json") as f:
     config = json.load(f)
 
@@ -23,25 +24,25 @@ BATCH_SIZE = config["batch_size"]
 LEARNING_RATE = config["learning_rate"]
 SAVE_PATH = "/s/bach/b/class/cs535/cs535a/data/new_models/4day_cnn_model.pth"
 
-## must change to correct one before running
-preprocessed_dataset = "/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/4day/training/"
+
+preprocessed_dataset = "/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/4day/training_new/"
 
 
 class ResNetNDVI(nn.Module):
     def __init__(self):
         super().__init__()
 
-        # Load pretrained weights using the recommended weights syntax
+        #load the pretrained weights
         weights = R3D_18_Weights.DEFAULT
         self.base = r3d_18(weights=weights)
 
-        # Modify the final fully connected layer for NDVI regression
-        self.base.fc = nn.Linear(self.base.fc.in_features, 8 * 64 * 64)
+        #modify final layer
+        self.base.fc = nn.Linear(self.base.fc.in_features, 64 * 64)
 
     def forward(self, x):
-        out = self.base(x)              # shape: [B, 4096]
-        out = torch.tanh(out)           # NDVI values constrained to [-1, 1]
-        out = out.view(-1, 8, 64, 64)   # reshape to [B, 1, 64, 64]
+        out = self.base(x)
+        out = torch.tanh(out)
+        out = out.view(-1, 1, 64, 64)
         return out
 
 #def get_split_indices(dataset, split="train", test_ratio=0.2, seed=42):
@@ -52,7 +53,7 @@ class ResNetNDVI(nn.Module):
 #    return train_indices if split == "train" else test_indices
 
 
-# Partition training dataset
+#partition data set
 def partition_dataset():
     dataset = MyDataset(preprocessed_dataset)
     #split_indices = get_split_indices(dataset, split="train")
@@ -73,7 +74,7 @@ def average_gradients(model):
         dist.all_reduce(param.grad.data, op=dist.reduce_op.SUM)
         param.grad.data /= size
 
-
+#print progress bar for monitoring
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
@@ -83,7 +84,7 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
         print()
 
 
-# Training loop
+#training
 
 def train(rank, world_size):
     train_loader = partition_dataset()
@@ -109,7 +110,7 @@ def train(rank, world_size):
             optimizer.zero_grad()
             pred = model(x)
             #pred = pred.view(-1, 8, 64, 64)
-            loss = criterion(pred, y)
+            loss = criterion(pred, y[:, 0:1, :, :])
             loss.backward()
             average_gradients(model)
             optimizer.step()
@@ -128,7 +129,7 @@ def train(rank, world_size):
 
 
 
-# Distributed setup
+#distributed setup
 
 def setup(rank, world_size):
     os.environ['MASTER_ADDR'] = 'onion'

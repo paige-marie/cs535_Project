@@ -7,13 +7,16 @@ import numpy as np
 from collections import defaultdict
 from tqdm import tqdm
 
+#extract unique tile IDs from file names
 def get_tile_id(fname):
-    return "_".join(fname.split("_")[2:])  # tile_960_64.tif
+    return "_".join(fname.split("_")[2:])
 
+#grab day of year from each file name
 def parse_year_doy(fname):
     parts = fname.split("_")
     return int(parts[0]), int(parts[1])
 
+#grab all the .tif data in all seasonal directories
 def get_all_tifs_recursively(root_dir):
     tif_files = []
     for root, _, files in os.walk(root_dir):
@@ -22,6 +25,7 @@ def get_all_tifs_recursively(root_dir):
                 tif_files.append(os.path.join(root, file))
     return tif_files
 
+#grab all .tif files by the tile IDs
 def get_sorted_tile_sequences(tif_paths):
     tile_groups = defaultdict(list)
     for full_path in tif_paths:
@@ -34,6 +38,7 @@ def get_sorted_tile_sequences(tif_paths):
 
     return tile_groups
 
+#compute global mean and standard deviation across the three bands
 def compute_band_stats(tile_groups):
     sum_vals = np.zeros(3)
     sum_sqs = np.zeros(3)
@@ -56,16 +61,17 @@ def compute_band_stats(tile_groups):
     std = np.sqrt((sum_sqs / pixel_count) - mean**2)
     return mean, std
 
+#preprocessing the sliding windows for the 3 different time windows, for training and testing
 def process(tile_groups, output_dir, mean, std, lookback=8, forecast_steps=8):
     os.makedirs(output_dir, exist_ok=True)
     sample_idx = 0
-
+    #high overlap, but we want stability with the 16 day composites
     for tile_id, file_list in tqdm(tile_groups.items(), desc="Processing tiles"):
         for i in range(len(file_list) - lookback - forecast_steps + 1):
             input_paths = file_list[i:i + lookback]
             target_paths = file_list[i + lookback:i + lookback + forecast_steps]
 
-            # Build input tensor
+
             input_frames = []
             for full_path in input_paths:
                 with rasterio.open(full_path) as src:
@@ -77,17 +83,17 @@ def process(tile_groups, output_dir, mean, std, lookback=8, forecast_steps=8):
                     bands = (bands - mean[:, None, None]) / std[:, None, None]
                     input_frames.append(torch.from_numpy(bands).float())
 
-            x = torch.stack(input_frames, dim=1)  # [3, LOOKBACK, 64, 64]
+            x = torch.stack(input_frames, dim=1)  # [3, LOOKBACK, 64, 64] 3 bands, whatever the look back window is, and the size
 
-            # Build target NDVI sequence
+
             target_frames = []
             for full_path in target_paths:
                 with rasterio.open(full_path) as src:
                     ndvi = src.read(3).astype(np.float32)
-                    ndvi = (ndvi - mean[0]) / std[0]  # Standardize NDVI only
+                    ndvi = (ndvi - mean[0]) / std[0]  #standardize NDVI only because that is all we are predicting
                     target_frames.append(torch.tensor(ndvi, dtype=torch.float32))
 
-            y = torch.stack(target_frames, dim=0)  # [8, 64, 64]
+            y = torch.stack(target_frames, dim=0)  #[8, 64, 64] for the 8 targets we want to predict and get RMSE for
 
             torch.save((x, y), os.path.join(output_dir, f"sample_{sample_idx:05d}.pt"))
             sample_idx += 1
@@ -102,26 +108,26 @@ def main():
     parser.add_argument("--stats_dir", required=True)
     args = parser.parse_args()
 
-    print("Collecting .tif files across all seasons...")
+    print("Collecting .tif files across all seasons")
     all_tifs = get_all_tifs_recursively(args.input_dir)
 
-    print("Grouping by tile and sorting by date...")
+    print("Grouping by tile and sorting by date")
     tile_groups = get_sorted_tile_sequences(all_tifs)
 
     stats_path = args.stats_dir + "band_stats.json"
     if os.path.exists(stats_path):
-        print("Loading existing band stats...")
+        print("Loading existing band stats")
         with open(stats_path, "r") as f:
             stats = json.load(f)
             mean = np.array(stats["mean"])
             std = np.array(stats["std"])
     else:
-        print("Computing band stats...")
+        print("Computing band stats")
         mean, std = compute_band_stats(tile_groups)
         with open(stats_path, "w") as f:
             json.dump({"mean": mean.tolist(), "std": std.tolist()}, f, indent=2)
 
-    print("Applying sliding windows with lookback =", args.lookback)
+    print("Applying sliding windows with lookback ", args.lookback)
     process(tile_groups, args.output_dir, mean, std, lookback=args.lookback)
 
 if __name__ == "__main__":

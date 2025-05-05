@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.distributed as dist
 import os
+import csv
 import sys
 import traceback
 import datetime
@@ -14,18 +15,20 @@ import json
 import numpy as np
 import matplotlib.image as mpimg
 
+#grabbing hyperparameters
 with open("/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/hyperparamters/8day_cnn_config.json") as f:
     config = json.load(f)
 
 
 MODEL_PATH = "/s/bach/b/class/cs535/cs535a/data/new_models/8day_cnn_model.pth"
 BATCH_SIZE = config["batch_size"]
-TIME_STEPS = 8  # Match training window
+TIME_STEPS = 8
 OFFSET = 8
 
 
 preprocessed_dataset = "/s/bach/b/class/cs535/cs535a/data/shuffled_data_by_window/8day/test/"
 
+#grabbing mean and standard deviation for de-standardizing later
 stats_path = "/s/bach/b/class/cs535/cs535a/data/true_preprocessed_8day_newband_stats.json"
 if os.path.exists(stats_path):
     print("Loading existing band stats...")
@@ -38,17 +41,17 @@ class ResNetNDVI(nn.Module):
     def __init__(self):
         super().__init__()
 
-        # Load pretrained weights using the recommended weights syntax
+        #load pretrained weights
         weights = R3D_18_Weights.DEFAULT
         self.base = r3d_18(weights=weights)
 
-        # Modify the final fully connected layer for NDVI regression
+        #modify final layer
         self.base.fc = nn.Linear(self.base.fc.in_features, 1 * 64 * 64)
 
     def forward(self, x):
-        out = self.base(x)              # shape: [B, 4096]
-        out = torch.tanh(out)           # NDVI values constrained to [-1, 1]
-        out = out.view(-1, 1, 64, 64)   # reshape to [B, 1, 64, 64]
+        out = self.base(x)
+        out = torch.tanh(out)
+        out = out.view(-1, 1, 64, 64)
         return out
 
 #def get_split_indices(dataset, split="test", test_ratio=0.2, seed=42):
@@ -58,7 +61,7 @@ class ResNetNDVI(nn.Module):
 #    )
 #    return train_indices if split == "train" else test_indices
 
-
+#partition data for different nodes
 def partition_test_dataset():
     dataset = MyDataset(preprocessed_dataset)
     #split_indices = get_split_indices(dataset, split="test")
@@ -76,7 +79,7 @@ def partition_test_dataset():
 def compute_rmse(pred, target):
     return torch.sqrt(torch.mean((pred - target) ** 2))
 
-
+#eval
 def evaluate(rank, world_size):
     test_loader = partition_test_dataset()
     model = ResNetNDVI()
@@ -89,71 +92,89 @@ def evaluate(rank, world_size):
     total_rmse_per_step = torch.zeros(OFFSET, device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
     total_batches = 0
 
+    if rank == 0:
+        os.makedirs("/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/8Day/", exist_ok=True)
+
+    csv_path = "/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/8Day/CNN_eval_per_sample_8day_server_" + str(rank) + ".csv"
+    #creating csv writer for logging per sample results
+    with open(csv_path, "w", newline="") as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerow(["GlobalSampleID", "Step", "Real_NDVI_RMSE"])
+
     with torch.no_grad():
-        for x, y in test_loader:  # y: [B, 8, 64, 64]
+        for batch_idx, (x, y) in enumerate(test_loader):
             if torch.cuda.is_available():
                 x, y = x.cuda(), y.cuda()
 
             B = x.shape[0]
             pred_stack = []
-            input_seq = x.clone()  # [B, 3, T, 64, 64]
+            input_seq = x.clone()
 
+            #autoregressive evaluation, predict an NDVI image and then feed it back in, save all results in a stack
             for step in range(OFFSET):
-                pred = model(input_seq)  # [B, 1, 64, 64]
+                pred = model(input_seq)
                 pred_stack.append(pred)
 
-                # Autoregressive feedback — update NDVI input channel (channel 0)
-                input_seq[:, 0, :-1] = input_seq[:, 0, 1:]       # shift
+                input_seq[:, 0, :-1] = input_seq[:, 0, 1:]
                 input_seq[:, 0, -1] = pred.squeeze(1)
 
-            if rank == 0 and total_batches == 0:
-                os.makedirs("/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/4Day/", exist_ok=True)
+            #assessment of autoregressive evaluation and image generation for master node only
+            for i in range(B):
+                for t in range(OFFSET):
+                    #extract standardized prediction and ground truth
+                    pred_std = pred_stack[t][i, 0].cpu().numpy()
+                    target_std = y[i, t].cpu().numpy()
 
-                for i in range(min(3, B)):  #Save first 3 samples
-                    for t in range(OFFSET):
-                        #Extract standardized prediction and ground truth
-                        pred_std = pred_stack[t][i, 0].cpu().numpy()
-                        target_std = y[i, t].cpu().numpy()
+                    #De-standardize
+                    pred_ndvi = (pred_std * NDVI_std + NDVI_mean) / 10000.0
+                    target_ndvi = (target_std * NDVI_std + NDVI_mean) / 10000.0
 
-                        #De-standardize
-                        pred_ndvi = (pred_std * NDVI_std + NDVI_mean) / 10000.0
-                        target_ndvi = (target_std * NDVI_std + NDVI_mean) / 10000.0
+                    #Compute RMSE in de-standardized scale
+                    pixel_rmse = np.sqrt(np.mean((pred_ndvi - target_ndvi) ** 2))
 
-                        #Compute RMSE in de-standardized scale
-                        pixel_rmse = np.sqrt(np.mean((pred_ndvi - target_ndvi) ** 2))
+                    #id for Jackson to use later
+                    global_sample_idx = batch_idx * B + i
+                    with open (csv_path, "a", newline="") as csv_file:
+                        writer = csv.writer(csv_file)
+                        writer.writerow([global_sample_idx, t+1, pixel_rmse])
 
-                        #Save images
-                        mpimg.imsave(f"/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/4Day/sample{i}_day{t+1}_pred.png", pred_ndvi, cmap='viridis', vmin=-1, vmax=1)
-                        mpimg.imsave(f"/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/4Day/sample{i}_day{t+1}_true.png", target_ndvi, cmap='viridis', vmin=-1, vmax=1)
+                    if rank == 0:
+                    #Save images
+                        mpimg.imsave(f"/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/8Day/CNN_sample{batch_idx * B + i:05d}_day{t+1}_pred_8day.png", pred_ndvi, cmap='viridis', vmin=-1, vmax=1)
+                        mpimg.imsave(f"/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/8Day/CNN_sample{batch_idx * B + i:05d}_day{t+1}_true_8day.png", target_ndvi, cmap='viridis', vmin=-1, vmax=1)
 
-                        #Log RMSE for this sample
-                        with open("/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/4Day/sample_log.txt", "a") as logf:
-                            logf.write(f"Sample {i} - Day {t+1}: RMSE = {pixel_rmse:.4f}\n")# append prediction
+                    #Log RMSE for this sample
+                    with open("/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/8Day/CNN_per_sample_log_8day.txt", "a") as logf:
+                        logf.write(f"Sample {i} - Day {t+1}: Real NDVI RMSE = {pixel_rmse:.4f}\n")
 
-            # Evaluate per-step RMSE
+            #per step RMSE averaging
             for step in range(OFFSET):
-                y_step = y[:, step, :, :]               # ground truth at t+step
-                y_pred = pred_stack[step].squeeze(1)    # predicted NDVI
+                y_step_std = y[:, step, :, :]
+                y_pred_std = pred_stack[step].squeeze(1)
+
+                y_step = (y_step_std.cpu() * NDVI_std + NDVI_mean) / 10000.0
+                y_pred = (y_pred_std.cpu() * NDVI_std + NDVI_mean) / 10000.0
+
                 rmse = compute_rmse(y_pred, y_step)
                 total_rmse_per_step[step] += rmse.item()
 
             total_batches += 1
 
     avg_rmse_per_step = total_rmse_per_step / total_batches
-
+#loggin and printing of stuff
     if rank == 0:
         for step, rmse_val in enumerate(avg_rmse_per_step.tolist(), 1):
-            print(f"Step {step}: RMSE = {rmse_val:.4f}")
+            print(f"Step {step}: Real NDVI RMSE = {rmse_val:.4f}")
 
         final_avg_rmse = avg_rmse_per_step.mean().item()
-        print(f"\nFinal averaged RMSE across all steps: {final_avg_rmse:.4f}")
+        print(f"\nFinal averaged Real NDVI RMSE across all steps: {final_avg_rmse:.4f}")
 
-        with open("/s/bach/b/class/cs535/cs535a/data/new_models/CNN_evaluation_log_8Day.txt", "a") as f:
-            f.write(f"[{datetime.datetime.now()}] Final average RMSE: {final_avg_rmse:.4f}\n")
+        with open("/s/bach/b/class/cs535/cs535a/data/eval_results/CNN/8Day/CNN_evaluation_log_8Day.txt", "a") as f:
+            f.write(f"[{datetime.datetime.now()}] Final average  Real NDVI RMSE: {final_avg_rmse:.4f}\n")
             for step, rmse_val in enumerate(avg_rmse_per_step.tolist(), 1):
-                f.write(f"Step {step} RMSE: {rmse_val:.4f}\n")
+                f.write(f"Step {step} Real NDVI RMSE: {rmse_val:.4f}\n")
 
-
+#distributed set up
 def setup(rank, world_size):
     os.environ['MASTER_ADDR'] = 'shallot'
     os.environ['MASTER_PORT'] = '17171'

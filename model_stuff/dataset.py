@@ -15,5 +15,5 @@ class MyDataset(Dataset):
         return len(self.sample_paths)
 
     def __getitem__(self, idx):
-        x, y = torch.load(self.sample_paths[idx])  # x: [3, T, 64, 64], y: [1, 64, 64]
+        x, y = torch.load(self.sample_paths[idx])
         return x, y
