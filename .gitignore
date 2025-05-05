@@ -1,6 +1,11 @@
 # ignore viirs data
 viirs/tifs
+gridmet/gridmet-data
+535-venv/
 viirs/token
+
+# ignore some images
+analysis/best_images148
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
